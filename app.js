@@ -15,6 +15,8 @@ app.use(express.static("public"));
 
 //Routes
 import userRouter from "./routes/user.route.js";
+// import { sentOTPMail } from "./utils/mail.js";
+// sentOTPMail({ otp: "1234", username: "aayush" });
 app.use("/api", userRouter);
 // Database Connection
 

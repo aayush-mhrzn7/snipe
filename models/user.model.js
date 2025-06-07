@@ -18,6 +18,11 @@ const UserSchema = new mongoose.Schema(
     dob: {
       type: Date,
     },
+    is_verified: {
+      type: Boolean,
+      default: false,
+      enum: [true, false],
+    },
   },
   {
     timestamps: true,
