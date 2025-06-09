@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "scrape": "node scrape.js",
+    "single": "node urlscrape.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

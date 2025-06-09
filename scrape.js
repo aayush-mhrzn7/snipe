@@ -1,15 +1,6 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
 
-const query = "office chair nepal avinya";
-const OUTPUT_FILE = "avinya.json";
-const MAX_LINKS = 1;
-
-if (fs.existsSync(OUTPUT_FILE)) {
-  console.log("⏹️ Data already exists. Exiting...");
-  process.exit(0);
-}
-
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -18,11 +9,13 @@ function delay(ms) {
 const CURRENCY_PATTERN =
   /(रु|Rs\.?|₹|\$|€|£|NPR|USD|AUD|CAD|INR|¥|₩|₽|฿|Fr|₪|₺|₴|₫|₸|₡|₱|₦|₲|₵|₼|₾|₿)\s?(\d[\d,.]*)/i;
 
-async function main() {
+export async function main({ google_query, no_of_links }) {
   const scrapedLinks = new Set();
   const visitedUrls = new Set();
   const productCache = new Set(); // To track unique products
+  const query = google_query;
 
+  const MAX_LINKS = no_of_links || 2;
   const browser = await puppeteer.launch({
     headless: false,
     args: [
@@ -67,8 +60,6 @@ async function main() {
       if (scrapedLinks.size >= MAX_LINKS) break;
       scrapedLinks.add(JSON.stringify(obj));
     }
-
-    console.log(`✅ Total scraped so far: ${scrapedLinks.size}/${MAX_LINKS}`);
   }
 
   async function goToNextPage(pageIndex) {
@@ -218,7 +209,6 @@ async function main() {
 
       return normalizedProducts;
     } catch (err) {
-      console.error("Error in page evaluation:", err);
       return [];
     }
   }
@@ -338,11 +328,10 @@ async function main() {
   }
 
   const finalData = Array.from(scrapedLinks).map((item) => JSON.parse(item));
-  console.log(`🔍 Visiting ${finalData.length} filtered result pages...`);
 
   for (let i = 0; i < finalData.length; i++) {
     const item = finalData[i];
-    console.log(`🔗 (${i + 1}/${finalData.length}) ${item.url}`);
+
     item.products = await VisitPage(item.url);
     await delay(2000 + Math.random() * 1000); // Random delay to avoid detection
   }
@@ -352,15 +341,6 @@ async function main() {
     (item) => item.products && item.products.length > 0
   );
 
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(filteredData, null, 2));
-  console.log(
-    `✅ Saved ${filteredData.length} results with ${filteredData.reduce(
-      (sum, item) => sum + item.products.length,
-      0
-    )} complete products to ${OUTPUT_FILE}`
-  );
-
   await browser.close();
+  return filteredData;
 }
-
-main();
