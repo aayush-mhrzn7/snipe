@@ -9,9 +9,8 @@ import {
 import { sentOTPMail, sendWelcomeMail } from "../utils/mail.js";
 const signupController = async (req, res) => {
   try {
-    console.log(req.body);
     const { email, password, name } = req.body;
-    console.log(email, password, name);
+
     if ([email, password, name].some((field) => field.trim("") === "")) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -72,7 +71,7 @@ const loginController = async (req, res) => {
 const GenerateOtp = async (req, res) => {
   try {
     const otp = Math.floor(10000 + Math.random() * 9000);
-    console.log(otp);
+
     const { email } = req.body;
     if (email.trim("") == "") {
       return res.status(400).json({ message: "Email is required" });
@@ -102,7 +101,7 @@ const GenerateOtp = async (req, res) => {
 const RegenerateOtp = async (req, res) => {
   try {
     const otp = Math.floor(100000 + Math.random() * 900000);
-    console.log(otp);
+
     const { email } = req.body;
     if (email.trim("") == "") {
       return res.status(400).json({ message: "Email is required" });
