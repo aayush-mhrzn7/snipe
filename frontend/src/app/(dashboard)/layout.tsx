@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
@@ -15,7 +16,10 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import FloatingAI from "@/components/floating-ai";
+import { usePathname } from "next/navigation";
 const layout = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname();
+  const path = pathname.split("/")[1].replace("-", " ");
   return (
     <>
       <SidebarProvider>
@@ -30,11 +34,13 @@ const layout = ({ children }: { children: React.ReactNode }) => {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">Snipe</BreadcrumbLink>
+                  <BreadcrumbLink href="/">Snipe</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  <BreadcrumbPage className="capitalize">
+                    {path == "" ? "Analytics" : path}
+                  </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>

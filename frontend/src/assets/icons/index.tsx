@@ -73,4 +73,24 @@ const BoltIcon = (props: SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
-export { TotalListingIcon, RefreshIcon, CheckedIcon, BoltIcon };
+const MailIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="33"
+      height="32"
+      viewBox="0 0 33 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M29.5 12V13.2081C29.5 14.3118 28.894 15.3263 27.9223 15.8496L19.2857 20.5M3.5 12V13.2081C3.5 14.3118 4.10597 15.3263 5.0777 15.8496L13.7143 20.5M25.5 23.8462L19.2857 20.5M19.2857 20.5L17.9223 19.7659C17.0344 19.2878 15.9656 19.2878 15.0777 19.7659L13.7143 20.5M13.7143 20.5L7.5 23.8462M29.5 26C29.5 27.6569 28.1569 29 26.5 29H6.5C4.84315 29 3.5 27.6569 3.5 26L3.5 11.7919C3.5 10.6883 4.10597 9.67373 5.0777 9.15049L15.0777 3.76587C15.9656 3.28776 17.0344 3.28776 17.9223 3.76587L27.9223 9.15049C28.894 9.67373 29.5 10.6883 29.5 11.7919V26Z"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+export { TotalListingIcon, RefreshIcon, CheckedIcon, BoltIcon, MailIcon };
