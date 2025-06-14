@@ -42,7 +42,7 @@ const chartConfig = {
 
 export function ChartBarMultiple() {
   return (
-    <Card className="border-primary-border border-none rounded-xl font-satoshi">
+    <Card className="border-primary-border border rounded-xl font-satoshi">
       <CardHeader>
         <CardTitle>Recently Scraped Products</CardTitle>
         <CardDescription>January - June 2024</CardDescription>

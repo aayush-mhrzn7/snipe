@@ -13,12 +13,41 @@ import { Label } from "@/components/ui/label";
 import { Eye, EyeClosed } from "lucide-react";
 import React from "react";
 import Link from "next/link";
+import { Controller, useForm } from "react-hook-form";
+import { RegisterFormData, RegisterSchema } from "@/utils/schema/user.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { userRegister } from "@/services/user.service";
+import { toast } from "sonner";
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const [showPassword, setShowPassword] = React.useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(RegisterSchema),
+  });
+  const router = useRouter();
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["register"],
+    mutationFn: userRegister,
+    onSuccess: async ({ status, data }) => {
+      if ([200, 201, 204].includes(status)) {
+        toast.success("User Account successful");
+        router.push("/register/otp?email=" + data.result.email);
+      }
+    },
+  });
+  console.log(errors);
+  const onSubmit = (data: RegisterFormData) => {
+    mutate(data);
+  };
   return (
     <div
       className={cn("flex flex-col gap-6", className, "font-satoshi")}
@@ -32,7 +61,7 @@ export function RegisterForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button variant="outline" className="w-full">
@@ -61,12 +90,35 @@ export function RegisterForm({
               </div>
               <div className="grid gap-6">
                 <div className="grid gap-3">
+                  <Label htmlFor="username">Username</Label>
+                  <Controller
+                    control={control}
+                    name="username"
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        id="username"
+                        type="text"
+                        placeholder="Drizzy Dre"
+                        required
+                      />
+                    )}
+                  />
+                </div>
+                <div className="grid gap-3">
                   <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    required
+                  <Controller
+                    control={control}
+                    name="email"
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        id="email"
+                        type="email"
+                        placeholder="m@example.com"
+                        required
+                      />
+                    )}
                   />
                 </div>
                 <div className="grid gap-3">
@@ -74,10 +126,17 @@ export function RegisterForm({
                     <Label htmlFor="password">Password</Label>
                   </div>
                   <div className="relative">
-                    <Input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      required
+                    <Controller
+                      control={control}
+                      name="password"
+                      render={({ field }) => (
+                        <Input
+                          id="password"
+                          type={showPassword ? "text" : "password"}
+                          required
+                          {...field}
+                        />
+                      )}
                     />
                     <button
                       type="button"
@@ -88,8 +147,8 @@ export function RegisterForm({
                     </button>
                   </div>
                 </div>
-                <Button type="submit" className="w-full">
-                  Register
+                <Button disabled={isPending} type="submit" className="w-full">
+                  {isPending ? "Registering..." : "Register"}
                 </Button>
               </div>
               <div className="text-center text-sm">

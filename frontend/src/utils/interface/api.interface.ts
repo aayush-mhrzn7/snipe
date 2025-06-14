@@ -1,5 +1,4 @@
-// interface APIResults<T> {
-//   message: string;
-//   status: number;
-//   data: T;
-// }
+interface APIResults<T> {
+  status: number;
+  data: T;
+}

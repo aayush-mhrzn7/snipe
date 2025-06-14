@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ProfileSwitcher } from "./profile-switcher";
+import { BowArrow, Target } from "lucide-react";
 
 // This is sample data.
 const data = {
@@ -64,10 +65,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props} className="font-satoshi">
       <SidebarHeader>
-        <ProfileSwitcher
-          versions={data.versions}
-          defaultVersion={data?.versions[0]?.url}
-        />
+        <Link href="/">
+          <h2 className="flex gap-2 p-4 text-xl font-bold items-center">
+            <BowArrow className="text-primary" />
+            SNIPE
+          </h2>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}

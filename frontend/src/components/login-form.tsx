@@ -1,19 +1,57 @@
 "use client";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React from "react";
+import { cn } from "@/lib/utils";
+import { userLogin } from "@/services/user.service";
+import { createCookies, decodeToken } from "@/utils/cookies.utils";
+import { LoginFormData, LoginSchema } from "@/utils/schema/user.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
-
+import { redirect, useRouter } from "next/navigation";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
   const [showPassword, setShowPassword] = React.useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(LoginSchema),
+  });
+  const router = useRouter();
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["login"],
+    mutationFn: userLogin,
+
+    onSuccess: async ({ status, data }) => {
+      if ([200, 201, 204].includes(status)) {
+        await createCookies("token", data.result.accessToken);
+        await createCookies("refreshToken", data.result.refreshToken);
+        const token = await decodeToken(data.result.accessToken);
+        console.log(token);
+        toast.success("Login successful");
+        router.push("/");
+      }
+    },
+    onError: (error: any) => {
+      toast.error(error.response.data.message);
+    },
+  });
+  console.log(errors);
+  const onSubmit = (data: LoginFormData) => {
+    mutate(data);
+  };
   return (
     <form
+      onSubmit={handleSubmit(onSubmit)}
       autoComplete="off"
       className={cn("flex flex-col gap-6", className)}
       {...props}
@@ -27,7 +65,19 @@ export function LoginForm({
       <div className="grid gap-6">
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Controller
+            control={control}
+            name="email"
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                required
+              />
+            )}
+          />
         </div>
         <div className="grid gap-3">
           <div className="flex items-center">
@@ -40,10 +90,17 @@ export function LoginForm({
             </Link>
           </div>
           <div className="relative">
-            <Input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              required
+            <Controller
+              control={control}
+              name="password"
+              render={({ field }) => (
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  {...field}
+                />
+              )}
             />
             <button
               type="button"
@@ -54,8 +111,8 @@ export function LoginForm({
             </button>
           </div>
         </div>
-        <Button type="submit" className="w-full">
-          Login
+        <Button disabled={isPending} type="submit" className="w-full">
+          {isPending ? "Logging in..." : "Login"}
         </Button>
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
           <span className="bg-background text-muted-foreground relative z-10 px-2">

@@ -211,7 +211,14 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function DataTableDemo() {
+type tableProps = {
+  title?: string;
+  subheading?: string;
+};
+export function DataTableDemo({
+  title = "Recent Cron Job Results",
+  subheading = " Cron Results of the last 7 days",
+}: tableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -242,11 +249,8 @@ export function DataTableDemo() {
   return (
     <div className="w-full font-satoshi">
       <div className="flex flex-col  items-start justify-center">
-        <h3 className="font-bold text-[20px]">Recent Cron Job Results</h3>
-        <span className="text-[16px] text-primary-accent">
-          {" "}
-          Cron Results of the last 7 days{" "}
-        </span>
+        <h3 className="font-bold text-[20px]">{title}</h3>
+        <span className="text-[16px] text-primary-accent">{subheading}</span>
       </div>
       <div className="flex items-center py-4">
         <Input
