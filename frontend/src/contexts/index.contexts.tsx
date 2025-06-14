@@ -1,12 +1,11 @@
 "use client";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { QueryClientProvider } from "@tanstack/react-query";
-import type * as React from "react";
 import {
   QueryClient,
+  QueryClientProvider,
   defaultShouldDehydrateQuery,
   isServer,
 } from "@tanstack/react-query";
+import type * as React from "react";
 import { Toaster } from "sonner";
 
 function makeQueryClient() {

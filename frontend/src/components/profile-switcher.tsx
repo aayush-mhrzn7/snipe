@@ -1,8 +1,9 @@
 "use client";
 
+import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
-import { Check, ChevronsUpDown, GalleryVerticalEnd } from "lucide-react";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +15,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 
 export function ProfileSwitcher({

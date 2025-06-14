@@ -1,9 +1,7 @@
 import { MailIcon } from "@/assets/icons";
-import React from "react";
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Button } from "../ui/button";
@@ -34,7 +32,7 @@ const index = () => {
         <div className="flex flex-col my-5 gap-2">
           <Button className="my-4">Submit</Button>
           <span className="text-[14px] text-[#808080] ">
-            Didn't received a code?{" "}
+            Didn&apos;t received a code?{" "}
             <span className="text-primary font-semibold">
               Resend code in 50s
             </span>

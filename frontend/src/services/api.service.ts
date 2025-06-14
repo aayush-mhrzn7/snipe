@@ -5,6 +5,7 @@ export const axiosInstance = axios.create({
   baseURL: "http://localhost:8000",
   timeout: 10000,
 });
+
 export const getBody = (body: any) => {
   const isFile = (value: any) => value instanceof File || value instanceof Blob;
 

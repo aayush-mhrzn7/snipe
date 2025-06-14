@@ -1,12 +1,11 @@
 "use client";
-import React from "react";
 import { AppSidebar } from "@/components/app-sidebar";
+import FloatingAI from "@/components/floating-ai";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
@@ -15,11 +14,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import FloatingAI from "@/components/floating-ai";
-import { usePathname } from "next/navigation";
+import React from "react";
 const layout = ({ children }: { children: React.ReactNode }) => {
-  const pathname = usePathname();
-  const path = pathname.split("/")[1].replace("-", " ");
+  // const pathname = usePathname();
+  // const path = pathname.split("/")[1].replace("-", " ");
   return (
     <>
       <SidebarProvider>
@@ -37,11 +35,11 @@ const layout = ({ children }: { children: React.ReactNode }) => {
                   <BreadcrumbLink href="/">Snipe</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
+                {/* <BreadcrumbItem>
                   <BreadcrumbPage className="capitalize">
                     {path == "" ? "Analytics" : path}
                   </BreadcrumbPage>
-                </BreadcrumbItem>
+                </BreadcrumbItem> */}
               </BreadcrumbList>
             </Breadcrumb>
           </header>

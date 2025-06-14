@@ -14,8 +14,9 @@ const index = () => {
             content="Summerize Using AI"
           />
         }
-        children={<ChatBox />}
-      />
+      >
+        <ChatBox />
+      </Modal>
     </div>
   );
 };

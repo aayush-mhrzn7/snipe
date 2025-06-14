@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -13,13 +12,13 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -128,11 +127,11 @@ export const columns: ColumnDef<Payment>[] = [
     header: ({ column }) => {
       return (
         <span className="flex cursor-pointer  items-center gap-2 ">
-          Category
+          Category {column.getCanSort() && <ArrowUpDown size={14} />}
         </span>
       );
     },
-    cell: ({ row }) => (
+    cell: () => (
       <div className="">
         <Badge>Electronics</Badge>
       </div>
@@ -157,25 +156,21 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "manage-jobs",
     size: 200,
     header: () => <div className="text-right">Manage Jobs</div>,
-    cell: ({ row }) => {
+    cell: () => {
       // Format the amount as a dollar amount
 
       return (
         <div className="text-right font-medium">
-          <Modal
-            trigger={<Button>Manage Jobs</Button>}
-            title="Manage Jobs"
-            children={
-              <div className="flex flex-col w-full gap-3">
-                <Input
-                  type="text"
-                  className="flex justify-center text-center items-center"
-                  placeholder="* * * * *"
-                />
-                <Button className="w-full">Update CRON</Button>
-              </div>
-            }
-          />
+          <Modal trigger={<Button>Manage Jobs</Button>} title="Manage Jobs">
+            <div className="flex flex-col w-full gap-3">
+              <Input
+                type="text"
+                className="flex justify-center text-center items-center"
+                placeholder="* * * * *"
+              />
+              <Button className="w-full">Update CRON</Button>
+            </div>
+          </Modal>
         </div>
       );
     },
