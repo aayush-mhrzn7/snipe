@@ -142,4 +142,12 @@ body {
   font-family: "Satoshi-Medium", sans-serif;
 }
 
-
+::selection {
+  background-color: var(--primary);
+  color: white;
+}
+input,
+textarea,
+select {
+  caret-color: var(--primary);
+}

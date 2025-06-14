@@ -36,6 +36,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Modal from "../modal/Modal";
+import { Badge } from "../ui/badge";
 
 const data: Payment[] = [
   {
@@ -111,16 +112,31 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "email",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <span
+          className="flex cursor-pointer  items-center gap-2 "
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Email
-          <ArrowUpDown />
-        </Button>
+          <ArrowUpDown size={14} />
+        </span>
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+  },
+  {
+    accessorKey: "category",
+    header: ({ column }) => {
+      return (
+        <span className="flex cursor-pointer  items-center gap-2 ">
+          Category
+        </span>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="">
+        <Badge>Electronics</Badge>
+      </div>
+    ),
   },
   {
     accessorKey: "amount",
@@ -176,7 +192,7 @@ export const columns: ColumnDef<Payment>[] = [
         <div className="flex flex-col items-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
+              <Button variant={"ghost"} className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal />
               </Button>

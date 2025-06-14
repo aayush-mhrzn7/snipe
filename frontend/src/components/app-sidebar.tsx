@@ -44,15 +44,15 @@ const data = {
         },
         {
           title: "Categories",
-          url: "/Categories",
+          url: "/categories",
         },
         {
           title: "Saved Posts",
-          url: "/google-scraper",
+          url: "/saved-posts",
         },
         {
           title: "Active Jobs",
-          url: "/google-scraper",
+          url: "/active-jobs",
         },
       ],
     },

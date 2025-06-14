@@ -44,7 +44,7 @@ export function ChartBarMultiple() {
   return (
     <Card className="border-primary-border border-none rounded-xl font-satoshi">
       <CardHeader>
-        <CardTitle>Bar Chart - Multiple</CardTitle>
+        <CardTitle>Recently Scraped Products</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
@@ -70,10 +70,10 @@ export function ChartBarMultiple() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="w-4 h-4" />
+          Scraped Sites up by 5.2% this month <TrendingUp className="w-4 h-4" />
         </div>
         <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
+          Showing total Scraped Results for the last 6 months
         </div>
       </CardFooter>
     </Card>
