@@ -1,13 +1,11 @@
 import LineChartSection from "@/components/line-chart";
 
-import { ChartBarMultiple } from "@/components/bar-chart";
-import { DataTableDemo } from "@/components/table";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import { Separator } from "@/components/ui/separator";
-import ComparisonLineChart from "@/components/comparison-line-chart";
-import AnalyticsCard from "@/components/analytics-card";
 import { CheckedIcon, RefreshIcon, TotalListingIcon } from "@/assets/icons";
+import AnalyticsCard from "@/components/analytics-card";
+import { ChartBarMultiple } from "@/components/bar-chart";
+import ComparisonLineChart from "@/components/comparison-line-chart";
+import { DataTableDemo } from "@/components/table";
+import { Separator } from "@/components/ui/separator";
 import { Bookmark } from "lucide-react";
 export default function Page() {
   return (
