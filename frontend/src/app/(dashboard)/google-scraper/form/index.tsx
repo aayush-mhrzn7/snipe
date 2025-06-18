@@ -2,22 +2,31 @@
 
 import { CustomInput, CustomSelect } from "@/components/custom-forms-fields";
 import { Button } from "@/components/ui/button";
-import { googleScraper } from "@/services/scraper.service";
 import { GoogleScrapperOptionSize } from "@/utils/constants/index.constants";
-import {
-  GoogleScrapperFormSchema,
-  GoogleScrapperSchema,
-} from "@/utils/schema/scraper.schema";
-import useScraperStore from "@/utils/states/scraper.state";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { GoogleScrapperFormSchema } from "@/utils/schema/scraper.schema";
+import { Control, SubmitHandler } from "react-hook-form";
 
-const FormGoogleScrape = ({ onSubmit, errors, control }) => {
+const FormGoogleScrape = ({
+  onSubmit,
+  errors,
+  control,
+}: {
+  onSubmit: SubmitHandler<GoogleScrapperFormSchema>;
+  errors: string;
+  control: Control;
+}) => {
   return (
-    <form onSubmit={onSubmit}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit({
+          google_query: e.currentTarget.google_query.value,
+          no_of_links: e.currentTarget.no_of_links.value,
+        });
+      }}
+    >
       <CustomInput
+        placeholder="Buy Mac Mini Near Me"
         //   @ts-ignore TODO: Fix control
         control={control}
         name="google_query"

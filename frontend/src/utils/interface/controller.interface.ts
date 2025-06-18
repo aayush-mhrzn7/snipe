@@ -9,6 +9,7 @@ interface ControllerProps {
 
 export interface InputControllerProps extends ControllerProps {
   inputType: string;
+  placeholder: string;
 }
 export interface SelectControllerProps extends ControllerProps {
   options: {

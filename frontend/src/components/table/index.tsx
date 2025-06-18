@@ -261,8 +261,8 @@ export function DataTableDemo({
         <h3 className="font-bold text-[20px]">{title}</h3>
         <span className="text-[16px] text-primary-accent">{subheading}</span>
       </div>
-      <div className="flex items-center justify-between max-md:flex-col">
-        <div className="flex items-center py-4">
+      <div className="flex items-center justify-between my-4 gap-2 max-md:items-start max-md:flex-col">
+        <div className="flex items-center ">
           <Input
             placeholder={"Filter by " + searchKey + " ....."}
             value={

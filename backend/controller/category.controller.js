@@ -10,7 +10,7 @@ export const createCategory = async (req, res) => {
     await newCategory.save();
     return res
       .status(201)
-      .json({ message: "Category created successfully", newCategory });
+      .json({ message: "Category created successfully", result: newCategory });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server error" });
@@ -21,7 +21,7 @@ export const createCategory = async (req, res) => {
 export const getCategories = async (req, res) => {
   try {
     const categories = await Category.find();
-    return res.status(200).json(categories);
+    return res.status(200).json({ result: categories, message: "success" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server error" });
@@ -35,7 +35,7 @@ export const getCategoryById = async (req, res) => {
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
-    return res.status(200).json(category);
+    return res.status(200).json({ result: category, message: "success" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server error" });
@@ -54,7 +54,10 @@ export const updateCategory = async (req, res) => {
     if (!updatedCategory) {
       return res.status(404).json({ message: "Category not found" });
     }
-    return res.status(200).json(updatedCategory);
+    return res.status(200).json({
+      message: "Category updated successfully",
+      result: updatedCategory,
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server error" });

@@ -28,6 +28,7 @@ const CustomInput = ({
   control,
   inputType,
   label,
+  placeholder,
   error,
 }: InputControllerProps) => {
   return (
@@ -36,7 +37,9 @@ const CustomInput = ({
       <Controller
         name={name}
         control={control}
-        render={({ field }) => <Input type={inputType} {...field} />}
+        render={({ field }) => (
+          <Input placeholder={placeholder} type={inputType} {...field} />
+        )}
       />
       <CustomLabel name={error} />
     </>

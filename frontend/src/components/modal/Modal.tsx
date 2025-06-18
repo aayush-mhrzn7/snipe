@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { useSearchParams } from "next/navigation";
 interface modalProps {
   trigger: string | React.ReactNode;
   title: string;
@@ -31,3 +32,45 @@ const Modal = ({ trigger, children, title }: modalProps) => {
 };
 
 export default Modal;
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "../ui/button";
+const AlertModel = ({
+  trigger,
+  title,
+  action,
+}: Partial<modalProps> & { action?: () => void }) => {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger>{trigger}</AlertDialogTrigger>
+      <AlertDialogContent className="font-satoshi">
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            {title || "Are you absolutely sure?"}
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <Button variant={"destructive"} onClick={action}>
+            Continue
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export { AlertModel };
