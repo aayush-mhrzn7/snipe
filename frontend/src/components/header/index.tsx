@@ -18,7 +18,7 @@ import { usePathname, useRouter } from "next/navigation";
 const index = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const path = pathname.split("/")[1];
+  const path = pathname.split("/")[1].replace("-", " ");
   const clearAllCookies = async () => {
     await deleteCookies("token");
     await deleteCookies("refreshToken");

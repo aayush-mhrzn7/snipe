@@ -1,10 +1,10 @@
-import { DataTableDemo } from "@/components/table";
 import React from "react";
+import DataTableComponent from "./component";
 
 const page = () => {
   return (
-    <div className="mx-auto py-2 container">
-      <DataTableDemo />
+    <div>
+      <DataTableComponent />
     </div>
   );
 };

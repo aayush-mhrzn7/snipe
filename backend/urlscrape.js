@@ -1,7 +1,7 @@
 // urlscrape.js
 import puppeteer from "puppeteer";
 
-export async function scrapeProductDetails({ url }) {
+async function scrapeProductDetails({ url }) {
   const PRODUCT_URL = url;
 
   const browser = await puppeteer.launch({
@@ -143,3 +143,5 @@ async function autoScroll(page) {
     });
   });
 }
+
+export { scrapeProductDetails };

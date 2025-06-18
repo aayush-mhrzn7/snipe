@@ -1,9 +1,10 @@
+import { readCookies } from "@/utils/cookies.utils";
 import axios from "axios";
 import { toast } from "sonner";
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/api",
-  timeout: 10000,
+  timeout: 10000000,
 });
 
 export const getBody = (body: any) => {
@@ -69,8 +70,8 @@ export const getBody = (body: any) => {
   }
 };
 axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
+  async (config) => {
+    const token = (await readCookies("token"))?.value;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

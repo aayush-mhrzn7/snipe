@@ -34,7 +34,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
           <Headers />
           <main className="flex flex-1 flex-col gap-4 p-4">{children}</main>
         </SidebarInset>
-        <div className="fixed bottom-4 right-4">
+        <div className="fixed bottom-22 right-12">
           <FloatingAI />
         </div>
       </SidebarProvider>

@@ -20,7 +20,7 @@ export const createCookies = async (
 
 export const readCookies = async (name: string) => {
   const cookie = await cookies();
-  return cookie.get(name);
+  return await cookie.get(name);
 };
 
 export const deleteCookies = async (name: string) => {

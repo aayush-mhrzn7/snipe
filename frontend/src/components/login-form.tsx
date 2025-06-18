@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { userLogin } from "@/services/user.service";
 import { createCookies, decodeToken } from "@/utils/cookies.utils";
+import { APIResults, ScraperResults } from "@/utils/interface/api.interface";
 import { LoginFormData, LoginSchema } from "@/utils/schema/user.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";

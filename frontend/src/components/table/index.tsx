@@ -37,7 +37,7 @@ import {
 import Modal from "../modal/Modal";
 import { Badge } from "../ui/badge";
 
-const data: Payment[] = [
+const dummyData: Payment[] = [
   {
     id: "m5gr84i9",
     amount: 316,
@@ -77,7 +77,7 @@ export type Payment = {
   email: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const dummyColumns: ColumnDef<Payment>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -214,22 +214,31 @@ export const columns: ColumnDef<Payment>[] = [
 type tableProps = {
   title?: string;
   subheading?: string;
+  data?: any[];
+  columns?: any[];
+  searchKey?: string;
+  injectUI?: React.ReactNode;
 };
 export function DataTableDemo({
   title = "Recent Cron Job Results",
   subheading = " Cron Results of the last 7 days",
+  data,
+  columns,
+  searchKey,
+  injectUI,
 }: tableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  console.log("data", data);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data,
-    columns,
+    data: data ?? dummyData,
+    columns: columns ?? dummyColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -252,15 +261,23 @@ export function DataTableDemo({
         <h3 className="font-bold text-[20px]">{title}</h3>
         <span className="text-[16px] text-primary-accent">{subheading}</span>
       </div>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm rounded-[8px]  "
-        />
+      <div className="flex items-center justify-between max-md:flex-col">
+        <div className="flex items-center py-4">
+          <Input
+            placeholder={"Filter by " + searchKey + " ....."}
+            value={
+              (table.getColumn(searchKey ?? "")?.getFilterValue() as string) ??
+              ""
+            }
+            onChange={(event) =>
+              table
+                .getColumn(searchKey ?? "")
+                ?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm rounded-[8px] capitalize  "
+          />
+        </div>
+        <div>{injectUI}</div>
       </div>
       <div className="rounded-md ">
         <Table className="border border-primary-border rounded-xl ">
@@ -306,7 +323,7 @@ export function DataTableDemo({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columns && columns.length}
                   className="h-24 text-center"
                 >
                   No results.

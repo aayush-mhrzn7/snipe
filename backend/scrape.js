@@ -9,7 +9,7 @@ function delay(ms) {
 const CURRENCY_PATTERN =
   /(रु|Rs\.?|₹|\$|€|£|NPR|USD|AUD|CAD|INR|¥|₩|₽|฿|Fr|₪|₺|₴|₫|₸|₡|₱|₦|₲|₵|₼|₾|₿)\s?(\d[\d,.]*)/i;
 
-export async function main({ google_query, no_of_links }) {
+async function main({ google_query, no_of_links }) {
   const scrapedLinks = new Set();
   const visitedUrls = new Set();
   const productCache = new Set(); // To track unique products
@@ -344,3 +344,4 @@ export async function main({ google_query, no_of_links }) {
   await browser.close();
   return filteredData;
 }
+export { main };
