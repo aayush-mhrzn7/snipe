@@ -12,6 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import AsyncSelect from "react-select/async";
+import { axiosInstance } from "@/services/api.service";
 
 const CustomLabel = ({ name }: { name: string }) => {
   return (
@@ -23,6 +25,13 @@ const CustomLabel = ({ name }: { name: string }) => {
     </label>
   );
 };
+const CustomError = ({ message }: { message: string }) => {
+  return (
+    <p className="block text-sm my-2 font-medium leading-6 text-danger">
+      {message}
+    </p>
+  );
+};
 const CustomInput = ({
   name,
   control,
@@ -30,6 +39,8 @@ const CustomInput = ({
   label,
   placeholder,
   error,
+  disabled,
+  className,
 }: InputControllerProps) => {
   return (
     <>
@@ -38,10 +49,16 @@ const CustomInput = ({
         name={name}
         control={control}
         render={({ field }) => (
-          <Input placeholder={placeholder} type={inputType} {...field} />
+          <Input
+            placeholder={placeholder}
+            type={inputType}
+            className={className}
+            disabled={disabled}
+            {...field}
+          />
         )}
       />
-      <CustomLabel name={error} />
+      <CustomError message={error} />
     </>
   );
 };
@@ -73,10 +90,73 @@ const CustomSelect = ({
               ))}
             </SelectContent>
           </Select>
-          <CustomLabel name={error} />
+          <CustomError message={error} />
         </>
       )}
     />
   );
 };
-export { CustomInput, CustomSelect, CustomLabel };
+
+const CustomOption = ({ innerProps, isDisabled, children }) =>
+  !isDisabled ? (
+    <div {...innerProps} className="p-2 cursor-pointer bg-primary-accent">
+      {children}
+    </div>
+  ) : null;
+
+const CustomAsyncSelect = ({
+  options,
+  name,
+  control,
+  label,
+  error,
+  placeholder,
+}: SelectControllerProps) => {
+  const loadOptions = async () => {
+    const response = await axiosInstance.get("/category");
+    return response.data.result.map((item) => ({
+      label: item.name,
+      value: item._id,
+    }));
+  };
+  return (
+    <>
+      <CustomLabel name={label} />
+      <Controller
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <AsyncSelect
+            isMulti
+            {...field}
+            placeholder={placeholder}
+            cacheOptions
+            components={{ Option: CustomOption }}
+            loadOptions={loadOptions}
+            defaultOptions
+            styles={{
+              multiValue: (styles) => ({
+                ...styles,
+                backgroundColor: "#1d9acc",
+                color: "#fff",
+                textColor: "#fff",
+              }),
+              multiValueLabel: (styles) => ({
+                ...styles,
+                color: "#fff",
+              }),
+            }}
+          />
+        )}
+      />
+      <CustomError message={error} />
+    </>
+  );
+};
+export {
+  CustomInput,
+  CustomSelect,
+  CustomLabel,
+  CustomAsyncSelect,
+  CustomError,
+};

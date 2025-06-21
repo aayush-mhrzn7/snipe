@@ -14,8 +14,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { ProductData } from "@/utils/interface/scraper.interface";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal, ExternalLink } from "lucide-react";
+import { ArrowUpDown, ExternalLink, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export const columns: ColumnDef<ProductData>[] = [
   {
@@ -218,6 +219,8 @@ export const columns: ColumnDef<ProductData>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const product = row.original;
+      // const router = useRouter();
+
       return (
         <div className="flex justify-center">
           <DropdownMenu>
@@ -260,14 +263,15 @@ export const columns: ColumnDef<ProductData>[] = [
                 Open Product Page
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-blue-600">
-                View Details
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-yellow-600">
-                Edit Monitoring
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-red-600">
-                Remove from List
+
+              <DropdownMenuItem
+                onClick={() => {
+                  history.pushState(null, "", `?image=${product.href}`);
+                  // router.push(`?image=${product.image}`);
+                }}
+                className="text-blue-600"
+              >
+                Save This Post
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
