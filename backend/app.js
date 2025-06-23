@@ -23,7 +23,7 @@ import postRouter from "./routes/post.route.js";
 import categoryRouter from "./routes/category.route.js";
 
 app.use("/api", userRouter);
-app.use("/api", postRouter);
+app.use("/api/posts", postRouter);
 app.use("/api", categoryRouter);
 
 app.listen(process.env.PORT || 3000, () => {
