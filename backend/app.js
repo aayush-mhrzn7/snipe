@@ -21,11 +21,13 @@ app.use(express.static("public"));
 import userRouter from "./routes/user.route.js";
 import postRouter from "./routes/post.route.js";
 import categoryRouter from "./routes/category.route.js";
+import { loadAndScheduleJobs } from "./utils/cron-scheduler.js";
 
 app.use("/api", userRouter);
 app.use("/api/posts", postRouter);
 app.use("/api", categoryRouter);
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3000, async () => {
   console.log(`Server is running on port ${process.env.PORT || 3000}`);
+  await loadAndScheduleJobs();
 });

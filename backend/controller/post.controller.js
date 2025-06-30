@@ -3,6 +3,7 @@ import Cron from "../models/cron.model.js";
 import { main } from "../scrape.js";
 import { scrapeProductDetails } from "../urlscrape.js";
 import mongoose from "mongoose";
+import { scheduleNewJob } from "../utils/cron-scheduler.js";
 
 const scrapeIndividualData = async (req, res) => {
   try {
@@ -99,6 +100,7 @@ const CreatePost = async (req, res) => {
         .status(400)
         .json({ message: "Server Error During Creating a new cron" });
     }
+    scheduleNewJob(cron, post);
     return res.status(200).json({ message: "Post created successfully" });
   } catch (error) {}
 };
